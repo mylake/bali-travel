@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>峇里島家族旅行 2026</title>
+  <style>
+    :root {
+      --green: #2d6a4f;
+      --green-light: #d8f3dc;
+      --sand: #faf3e0;
+      --text: #1b1b1b;
+      --text-muted: #555;
+      --border: #e0d8c8;
+      --card-bg: #fff;
+      --accent: #d4a373;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", sans-serif;
+      background: var(--sand);
+      color: var(--text);
+      font-size: 20px;
+      line-height: 1.85;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 48px 20px 32px;
+      background: linear-gradient(135deg, var(--green) 0%, #40916c 100%);
+      color: #fff;
+      margin-bottom: 32px;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .hero .dates {
+      font-size: 1.3rem;
+      opacity: 0.9;
+    }
+    .hero .rate {
+      font-size: 1rem;
+      opacity: 0.65;
+      margin-top: 8px;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 28px;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--green);
+      border-bottom: 2px solid var(--green);
+      padding-bottom: 6px;
+      margin-bottom: 16px;
+    }
+
+    /* Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--green);
+    }
+    .card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .card ul li {
+      padding: 4px 0;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+    }
+    .card ul li::before {
+      content: "·";
+      font-weight: 700;
+      color: var(--accent);
+      margin-right: 6px;
+    }
+
+    /* Villa card */
+    .villa-info {
+      display: grid;
+      gap: 6px;
+    }
+    .villa-info .label {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+    .villa-info .value {
+      font-weight: 600;
+    }
+    .villa-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid var(--green);
+    }
+
+    /* Members */
+    .members-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .member {
+      background: var(--green-light);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 1.1rem;
+    }
+    .member .from {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .member-total {
+      margin-top: 10px;
+      font-weight: 700;
+      text-align: center;
+      color: var(--green);
+    }
+
+    /* Day cards */
+    .day-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+    .day-header {
+      background: var(--green);
+      color: #fff;
+      padding: 16px 20px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+    .day-header .arrow {
+      transition: transform 0.2s;
+      font-size: 0.8rem;
+    }
+    .day-header.open .arrow {
+      transform: rotate(180deg);
+    }
+    .day-body {
+      padding: 16px 20px;
+      display: none;
+    }
+    .day-body.open {
+      display: block;
+    }
+    .day-body .event {
+      padding: 6px 0;
+      border-bottom: 1px solid #f0ebe0;
+    }
+    .day-body .event:last-child {
+      border-bottom: none;
+    }
+    .event-time {
+      font-size: 1rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .event-title {
+      font-weight: 600;
+      margin: 2px 0;
+    }
+    .event-detail {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.08rem;
+      min-width: 400px;
+    }
+    thead th {
+      background: var(--green);
+      color: #fff;
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    tbody td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+    tbody tr.total-row td {
+      font-weight: 700;
+      background: var(--green-light);
+    }
+
+    /* Flight cards (mobile friendly) */
+    .flight-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .flight-route {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+    .flight-detail {
+      font-size: 1.08rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .flight-price {
+      margin-top: 8px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Notes */
+    .note-item {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 1rem;
+    }
+    .note-item:last-child {
+      border-bottom: none;
+    }
+    .note-num {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background: var(--green);
+      color: #fff;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 24px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    /* Budget toggle */
+    .budget-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .budget-tab {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 2px solid var(--green);
+      background: transparent;
+      color: var(--green);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .budget-tab.active {
+      background: var(--green);
+      color: #fff;
+    }
+    .budget-panel {
+      display: none;
+    }
+    .budget-panel.active {
+      display: block;
+    }
+
+    /* Cost ref */
+    .cost-grid {
+      display: grid;
+      gap: 8px;
+    }
+    .cost-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: var(--card-bg);
+      border-radius: 8px;
+      font-size: 1.08rem;
+    }
+    .cost-item .cost-name {
+      flex: 1;
+    }
+    .cost-item .cost-price {
+      font-weight: 600;
+      text-align: right;
+      white-space: nowrap;
+      margin-left: 12px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 32px 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      body { font-size: 19px; }
+      .hero h1 { font-size: 2rem; }
+      .members-grid { grid-template-columns: 1fr; }
+      table { font-size: 1rem; }
+      thead th, tbody td { padding: 11px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>峇里島家族旅行 2026</h1>
+  <div class="dates">12月19日（六）— 12月25日（五）· 6 晚</div>
+  <div class="rate">匯率參考：¥1 ≈ NT$0.20 ／ $1 USD ≈ NT$31.5</div>
+</div>
+
+<div class="container">
+
+  <!-- Members -->
+  <div class="section">
+    <div class="section-title">旅行成員</div>
+    <div class="members-grid">
+      <div class="member">Lake、Eva、Leon（4歲）<div class="from">東京出發</div></div>
+      <div class="member">爸爸、媽媽<div class="from">台北出發</div></div>
+      <div class="member">哥哥、嫂嫂、姪子（12歲）<div class="from">台北出發</div></div>
+      <div class="member">妹妹<div class="from">台北出發</div></div>
+    </div>
+    <div class="member-total">7 大 2 小，共 9 人</div>
+  </div>
+
+  <!-- Villa -->
+  <div class="section">
+    <div class="section-title">住宿</div>
+    <div class="card">
+      <h3>Maya Villa ★ 4.9</h3>
+      <div class="villa-info">
+        <div><span class="label">地點</span> Kuta Selatan, Bali</div>
+        <div><span class="label">房型</span> 4 臥室 · 6 張床 · 4 衛浴 · 整套別墅</div>
+        <div><span class="label">容納</span> 最多 10 人</div>
+        <div><span class="label">特色</span> 大型私人泳池、寬敞草坪花園、傳統峇里島風格</div>
+        <div><span class="label">費用</span> <strong>¥246,386 / 6 晚（約 NT$49,000）</strong></div>
+      </div>
+      <a class="villa-link" href="https://www.airbnb.com.tw/rooms/14558128?adults=7&check_in=2026-12-19&check_out=2026-12-25&children=2" target="_blank" rel="noopener">在 Airbnb 上查看 →</a>
+    </div>
+  </div>
+
+  <!-- Flights -->
+  <div class="section">
+    <div class="section-title">機票</div>
+    <div class="flight-card">
+      <div class="flight-route">東京 → 丹帕沙</div>
+      <div class="flight-detail">
+        嘉魯達印尼航空（直飛）<br>
+        去程：11:00 出發 → 17:25 抵達<br>
+        回程：00:20 出發 → 08:50 抵達
+      </div>
+      <div class="flight-price">每人 ¥118,000（約 NT$23,600）</div>
+      <a class="villa-link" href="https://www.skyscanner.com.tw/transport/flights/tyoa/dps/261219/261225/?adultsv2=2&cabinclass=economy&childrenv2=4&ref=home&rtn=1&preferdirects=true&outboundaltsenabled=false&inboundaltsenabled=false" target="_blank" rel="noopener">Skyscanner 查價 →</a>
+    </div>
+    <div class="flight-card">
+      <div class="flight-route">台北 → 丹帕沙</div>
+      <div class="flight-detail">
+        中華航空（直飛）<br>
+        去程：09:10 出發 → 14:40 抵達<br>
+        回程：15:45 出發 → 21:05 抵達
+      </div>
+      <div class="flight-price">每人 ¥85,000（約 NT$17,000）</div>
+      <a class="villa-link" href="https://www.skyscanner.com.tw/transport/flights/tpet/dps/261219/261225/?adultsv2=5&cabinclass=economy&childrenv2=12&ref=home&rtn=1&preferdirects=true&outboundaltsenabled=false&inboundaltsenabled=false" target="_blank" rel="noopener">Skyscanner 查價 →</a>
+    </div>
+  </div>
+
+  <!-- Itinerary -->
+  <div class="section">
+    <div class="section-title">每日行程</div>
+
+    <div class="day-card">
+      <div class="day-header" onclick="toggleDay(this)">
+        <span>Day 1 · 12/19（六）抵達・入住</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="event">
+          <div class="event-time">14:40</div>
+          <div class="event-title">台北組抵達丹帕沙機場</div>
+          <div class="event-detail">機場 → Villa 約 30 分鐘，預約包車接機（$15–20 USD）</div>
+        </div>
+        <div class="event">
+          <div class="event-time">17:25</div>
+          <div class="event-title">東京組抵達丹帕沙機場</div>
+          <div class="event-detail">另外包一台車或請司機折返接</div>
+        </div>
+        <div class="event">
+          <div class="event-time">約 19:00</div>
+          <div class="event-title">東京組抵達 Villa</div>
+        </div>
+        <div class="event">
+          <div class="event-title">Villa 內輕食晚餐</div>
+          <div class="event-detail">讓大家休息適應</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header" onclick="toggleDay(this)">
+        <span>Day 2 · 12/20（日）Villa 慢活・Spa 日</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="event">
+          <div class="event-title">早上：私人泳池</div>
+          <div class="event-detail">Leon 和姪子戲水，爸媽乘涼</div>
+        </div>
+        <div class="event">
+          <div class="event-title">上午：到府峇里島按摩</div>
+          <div class="event-detail">約 $20–30 USD / 人 / 90分鐘，按摩師到府</div>
+        </div>
+        <div class="event">
+          <div class="event-title">下午：Jimbaran 海灣散步</div>
+          <div class="event-detail">Villa 出發約 10–15 分鐘，海灘平坦適合長輩</div>
+        </div>
+        <div class="event">
+          <div class="event-title">傍晚：Jimbaran 海鮮灘燒</div>
+          <div class="event-detail">餐廳就在海灣沿線</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header" onclick="toggleDay(this)">
+        <span>Day 3 · 12/21（一）烏布文化半日遊</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="event">
+          <div class="event-time">08:00</div>
+          <div class="event-title">包車出發烏布</div>
+          <div class="event-detail">Villa → 烏布約 1.5 小時，大型廂型車（$50–70 USD / 日），全員出動</div>
+        </div>
+        <div class="event">
+          <div class="event-title">聖泉寺 Tirta Empul</div>
+          <div class="event-detail">外圍觀看傳統淨水儀式</div>
+        </div>
+        <div class="event">
+          <div class="event-title">德格拉朗梯田</div>
+          <div class="event-detail">觀景台遠眺，不需走入梯田</div>
+        </div>
+        <div class="event">
+          <div class="event-title">烏布市場</div>
+          <div class="event-detail">午餐 + 手工藝品</div>
+        </div>
+        <div class="event">
+          <div class="event-time">15:00</div>
+          <div class="event-title">返回 Villa</div>
+          <div class="event-detail">選擇性：傍晚烏布皇宮克差舞表演</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header" onclick="toggleDay(this)">
+        <span>Day 4 · 12/22（二）烏龜島・家庭 BBQ</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="event">
+          <div class="event-time">09:00</div>
+          <div class="event-title">前往 Tanjung Benoa 碼頭</div>
+          <div class="event-detail">Villa 出發約 20 分鐘</div>
+        </div>
+        <div class="event">
+          <div class="event-title">快艇前往烏龜島 Turtle Island</div>
+          <div class="event-detail">快艇來回約 20 分鐘（$15–25 USD / 人）</div>
+        </div>
+        <div class="event">
+          <div class="event-title">下午：返回 Villa</div>
+        </div>
+        <div class="event">
+          <div class="event-title">晚上：Villa 花園 BBQ 晚餐</div>
+          <div class="event-detail">外燴送到 Villa，不用出門</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header" onclick="toggleDay(this)">
+        <span>Day 5 · 12/23（三）自由日</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="event">
+          <div class="event-title">全家自由活動日</div>
+          <div class="event-detail">可一起到附近逛逛、泳池放鬆</div>
+        </div>
+        <div class="event">
+          <div class="event-title">Lake & Eva：烏布深度探索</div>
+          <div class="event-detail">包車來回約 1.5 小時單程（$40–50 USD）</div>
+        </div>
+        <div class="event">
+          <div class="event-title">晚上：全家 Menega Cafe 海鮮晚餐</div>
+          <div class="event-detail">Villa → Jimbaran 約 10–15 分鐘</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header" onclick="toggleDay(this)">
+        <span>Day 6 · 12/24（四）海神廟・聖誕夜</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="event">
+          <div class="event-time">08:30</div>
+          <div class="event-title">海神廟 Tanah Lot 半日遊</div>
+          <div class="event-detail">Villa 出發約 45–60 分鐘，包車（$30–40 USD），建議早出避人潮</div>
+        </div>
+        <div class="event">
+          <div class="event-title">下午：最後一輪到府按摩</div>
+          <div class="event-detail">按摩師到府，不用出門</div>
+        </div>
+        <div class="event">
+          <div class="event-title">晚上：Villa 聖誕夜家族晚餐</div>
+          <div class="event-detail">外燴送到 Villa</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header" onclick="toggleDay(this)">
+        <span>Day 7 · 12/25（五）聖誕日・回程</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="event">
+          <div class="event-title">早上：最後泳池時光</div>
+        </div>
+        <div class="event">
+          <div class="event-title">下午：收拾行李，前往機場</div>
+          <div class="event-detail">Villa → 機場約 30 分鐘，9人行李多建議分兩台車（$20–30 USD）</div>
+        </div>
+        <div class="event">
+          <div class="event-time">13:00 出發</div>
+          <div class="event-title">台北組前往機場</div>
+          <div class="event-detail">15:45 班機</div>
+        </div>
+        <div class="event">
+          <div class="event-time">21:00 出發</div>
+          <div class="event-title">東京組前往機場</div>
+          <div class="event-detail">00:20 隔日班機</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Budget -->
+  <div class="section">
+    <div class="section-title">預算估算</div>
+
+    <div class="budget-tabs">
+      <button class="budget-tab active" onclick="showBudget('all')">全團合計</button>
+      <button class="budget-tab" onclick="showBudget('taipei')">台北組</button>
+      <button class="budget-tab" onclick="showBudget('tokyo')">東京組</button>
+    </div>
+
+    <div id="budget-all" class="budget-panel active">
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>項目</th><th>日圓</th><th>台幣（約）</th></tr></thead>
+            <tbody>
+              <tr><td>機票（9人）</td><td>¥864,880</td><td>NT$173,000</td></tr>
+              <tr><td>Maya Villa 6 晚</td><td>¥246,386</td><td>NT$49,000</td></tr>
+              <tr><td>當地花費</td><td>¥300,000–450,000</td><td>NT$60,000–90,000</td></tr>
+              <tr class="total-row"><td>9人總計</td><td>¥1,411,000–1,561,000</td><td>NT$282,000–312,000</td></tr>
+              <tr class="total-row"><td>每人平均</td><td>¥157,000–174,000</td><td>NT$31,000–35,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="budget-taipei" class="budget-panel">
+      <div class="card">
+        <h3>台北出發（6 人）</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>項目</th><th>日圓</th><th>台幣（約）</th></tr></thead>
+            <tbody>
+              <tr><td>機票（每人 ¥85,000）</td><td>¥510,000</td><td>NT$102,000</td></tr>
+              <tr><td>住宿分攤（6/9）</td><td>¥164,000</td><td>NT$32,800</td></tr>
+              <tr><td>當地花費分攤</td><td>¥200,000–300,000</td><td>NT$40,000–60,000</td></tr>
+              <tr class="total-row"><td>台北組總計</td><td>¥874,000–974,000</td><td>NT$175,000–195,000</td></tr>
+              <tr class="total-row"><td>每人平均</td><td>¥145,000–162,000</td><td>NT$29,000–32,500</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="budget-tokyo" class="budget-panel">
+      <div class="card">
+        <h3>東京出發（3 人）</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>項目</th><th>日圓</th><th>台幣（約）</th></tr></thead>
+            <tbody>
+              <tr><td>機票（3人）</td><td>¥354,880</td><td>NT$71,000</td></tr>
+              <tr><td>住宿分攤（3/9）</td><td>¥82,000</td><td>NT$16,400</td></tr>
+              <tr><td>當地花費分攤</td><td>¥100,000–150,000</td><td>NT$20,000–30,000</td></tr>
+              <tr class="total-row"><td>東京組總計</td><td>¥536,000–586,000</td><td>NT$107,000–117,000</td></tr>
+              <tr class="total-row"><td>每人平均</td><td>¥178,000–195,000</td><td>NT$35,600–39,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Local costs -->
+  <div class="section">
+    <div class="section-title">當地費用參考</div>
+    <div class="cost-grid">
+      <div class="cost-item"><span class="cost-name">到府峇里島按摩（90分鐘）</span><span class="cost-price">$20–30 / 人</span></div>
+      <div class="cost-item"><span class="cost-name">包車一日（含司機）</span><span class="cost-price">$35</span></div>
+      <div class="cost-item"><span class="cost-name">Jimbaran 海鮮灘燒（9人）</span><span class="cost-price">$80–120</span></div>
+      <div class="cost-item"><span class="cost-name">烏龜島快艇行程（9人）</span><span class="cost-price">$120–200</span></div>
+      <div class="cost-item"><span class="cost-name">Villa BBQ 外燴</span><span class="cost-price">$100–150</span></div>
+      <div class="cost-item"><span class="cost-name">Menega Cafe 晚餐（9人）</span><span class="cost-price">$80–120</span></div>
+    </div>
+    <div style="text-align:right;font-size:0.88rem;color:var(--text-muted);margin-top:6px;">單位：USD</div>
+  </div>
+
+  <!-- Transport -->
+  <div class="section">
+    <div class="section-title">交通費用彙整</div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>行程</th><th>方式</th><th>USD</th></tr></thead>
+          <tbody>
+            <tr><td>機場接機（兩批）</td><td>包車</td><td>$30–40</td></tr>
+            <tr><td>機場送機（兩批）</td><td>包車</td><td>$30–40</td></tr>
+            <tr><td>Day 3 烏布全日</td><td>廂型車含司機</td><td>$50–70</td></tr>
+            <tr><td>Day 4 烏龜島碼頭</td><td>包車</td><td>$15–20</td></tr>
+            <tr><td>Day 5 烏布來回</td><td>包車</td><td>$40–50</td></tr>
+            <tr><td>Day 6 海神廟</td><td>包車</td><td>$30–40</td></tr>
+            <tr><td>日常短程</td><td>Grab / 包車</td><td>$30–50</td></tr>
+            <tr class="total-row"><td>交通總計</td><td></td><td>$225–310</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="event-detail" style="margin-top:8px;">建議透過 Villa 房東詢問合作的固定司機，比臨時叫 Grab 便宜，9人行李多包廂型車更舒適。</div>
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <div class="section">
+    <div class="section-title">注意事項</div>
+    <div class="card">
+      <div class="note-item"><span class="note-num">1</span>入住前確認 Maya Villa 有地面層臥室給爸媽，避免爬樓梯</div>
+      <div class="note-item"><span class="note-num">2</span>出發前確認爸媽是否容易暈船，可備暈船藥</div>
+      <div class="note-item"><span class="note-num">3</span>聖誕週活動和餐廳需提前預訂，越早越好</div>
+      <div class="note-item"><span class="note-num">4</span>12月雨季：通常早上晴、下午才有陣雨，戶外活動盡量排上午</div>
+      <div class="note-item"><span class="note-num">5</span>建議全程租用固定司機（$35 USD/天），比每次叫 Grab 方便</div>
+      <div class="note-item"><span class="note-num">6</span>台幣換算以 ¥1 ≈ NT$0.20、$1 USD ≈ NT$31.5 計算，僅供參考</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">峇里島家族旅行 2026 · 12/19–12/25</div>
+
+<script>
+function toggleDay(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.day-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.day-header').forEach(h => h.classList.remove('open'));
+  // Toggle current
+  if (!isOpen) {
+    body.classList.add('open');
+    header.classList.add('open');
+  }
+}
+
+function showBudget(tab) {
+  document.querySelectorAll('.budget-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.budget-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('budget-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Open Day 1 by default
+document.querySelector('.day-header').click();
+</script>
+
+</body>
+</html>
