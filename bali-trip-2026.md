@@ -30,6 +30,15 @@
 - Airbnb 連結：https://www.airbnb.com.tw/rooms/14558128?adults=7&check_in=2026-12-19&check_out=2026-12-25&children=2
 - 費用：¥246,386 / 6 晚（約 NT$49,000）
 
+**Villa Prabu Madu**
+- 地點：印尼峇里島 努沙杜瓦（Nusa Dua）
+- 房型：4 臥室・5 張床・5.5 衛浴・整套別墅
+- 容納：最多 11 人
+- 特色：私人泳池、免費停車、空調、自助入住
+- 評分：★ 4.86
+- Airbnb 連結：https://www.airbnb.com.tw/rooms/5236431?check_in=2026-12-19&check_out=2026-12-25&adults=7&children=2
+- 費用：¥257,520 / 6 晚（約 NT$51,500）
+
 ---
 
 ## 機票
